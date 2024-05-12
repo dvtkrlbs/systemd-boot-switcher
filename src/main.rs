@@ -87,8 +87,17 @@ fn main() {
     let oneshot_variable = Variable::new_with_vendor(&ENTRY_ONESHOT_NAME, VariableVendor::Custom(Uuid::from_str(&VENDOR).unwrap()));
 
     // let val = "nixos-generation-71.conf";
-    let val = CString::new("nixos-generation-71").unwrap();
-    match system_manager.write(&oneshot_variable, VariableFlags::NON_VOLATILE | VariableFlags::BOOTSERVICE_ACCESS | VariableFlags::RUNTIME_ACCESS, val.as_bytes_with_nul()) {
+    let val = "nixos-generation-71";
+    let mut buffer = Vec::with_capacity(val.len() * 2 + 2);
+
+    for wchar in val.encode_utf16() {
+        let [first, second] = wchar.to_le_bytes();
+        buffer.push(first);
+        buffer.push(second);
+    }
+
+    buffer.extend_from_slice(&[0, 0]);
+    match system_manager.write(&oneshot_variable, VariableFlags::NON_VOLATILE | VariableFlags::BOOTSERVICE_ACCESS | VariableFlags::RUNTIME_ACCESS, &buffer) {
         Ok(()) => println!("SUCCESFULLY SETO ONESHOT"),
         Err(e) => println!("{}", e.to_string())
     }
