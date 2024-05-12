@@ -87,7 +87,7 @@ fn main() {
     let oneshot_variable = Variable::new_with_vendor(&ENTRY_ONESHOT_NAME, VariableVendor::Custom(Uuid::from_str(&VENDOR).unwrap()));
 
     // let val = "nixos-generation-71.conf";
-    let val = CString::new("nixos-generation-71.conf").unwrap();
+    let val = CString::new("nixos-generation-71").unwrap();
     match system_manager.write(&oneshot_variable, VariableFlags::NON_VOLATILE, val.as_bytes_with_nul()) {
         Ok(()) => println!("SUCCESFULLY SETO ONESHOT"),
         Err(e) => println!("{}", e.to_string())
