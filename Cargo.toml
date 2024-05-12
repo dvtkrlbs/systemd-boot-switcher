@@ -1,0 +1,8 @@
+[package]
+name = "systemd-boot-switcher"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+efivar = "2.0.0"
+uuid = "1.8.0"
