@@ -5,4 +5,7 @@ edition = "2021"
 
 [dependencies]
 efivar = "2.0.0"
+fatfs = "0.3.6"
 uuid = "1.8.0"
+windows-drives = "0.5.0"
+winreg = "0.52.0"
